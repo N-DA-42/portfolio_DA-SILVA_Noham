@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - DA SILVA Noham</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <script>
+        /* 🎨 ICI ON CHOISIT LES COULEURS DE TES FEUTRES MAGIQUES */
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Space Mono', 'monospace'],
+                    },
+                    colors: {
+                        console: {
+                            bg: '#121212', // Noir profond comme l'espace
+                            panel: '#1E1E1E', // Gris foncé pour les boîtes
+                            cyan: '#00F0FF', // Bleu laser brillant
+                            magenta: '#FF003C', // Rose fluo rigolo
+                            yellow: '#FCEE0A', // Jaune soleil
+                            green: '#00FF66' // Vert extraterrestre
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #121212; color: #E0E0E0; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #121212; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #00F0FF; }
+        
+        /* 🕹️ LES PETITS BOUTONS FAÇON INTERRUPTEUR DE LUMIÈRE */
+        .toggle-switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .toggle-slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .4s; border-radius: 24px; border: 1px solid #555; }
+        .toggle-slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: #888; transition: .4s; border-radius: 50%; }
+        input:checked + .toggle-slider { background-color: #00F0FF; border-color: #00F0FF; box-shadow: 0 0 10px rgba(0, 240, 255, 0.5); }
+        input:checked + .toggle-slider:before { transform: translateX(20px); background-color: #121212; }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col overflow-x-hidden">
+
+    <!-- 🚁 LA BARRE DU HAUT QUI TE SUIT PARTOUT -->
+    <header class="sticky top-0 z-50 bg-console-bg/90 backdrop-blur-md border-b border-gray-800 p-4 sm:p-6">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+            
+            <div class="flex flex-col items-center sm:items-start">
+                
+                <!-- ========================================================= -->
+                <!-- ✏️ CHANGE ICI : TON SUPER NOM DE HÉROS (En haut à gauche) -->
+                <!-- ========================================================= -->
+                <h1 class="font-mono text-xl sm:text-2xl font-bold text-white uppercase tracking-wider">
+                    <span class="text-console-cyan">></span> Noham DA SILVA
+                </h1>
+                <p class="font-mono text-xs text-gray-500 uppercase mt-1">SYS.RÉGIE // BTS TIEE</p>
+            </div>
+
+            <nav class="flex gap-6 items-center">
+                <label class="flex items-center gap-2 cursor-pointer group">
+                    <span class="font-mono text-xs text-gray-400 group-hover:text-console-cyan transition-colors">GALERIE</span>
+                    <div class="toggle-switch">
+                        <input type="radio" name="nav-toggle" checked onchange="document.getElementById('gallery').scrollIntoView({behavior: 'smooth'})">
+                        <span class="toggle-slider"></span>
+                    </div>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer group">
+                    <span class="font-mono text-xs text-gray-400 group-hover:text-console-magenta transition-colors">CONTACT</span>
+                    <div class="toggle-switch">
+                        <input type="radio" name="nav-toggle" onchange="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">
+                        <span class="toggle-slider"></span>
+                    </div>
+                </label>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 🏰 LE GRAND CHÂTEAU D'ACCUEIL (Ta présentation) -->
+    <section class="max-w-7xl mx-auto w-full px-4 sm:px-6 py-12 sm:py-24 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+        <div>
+            <div class="inline-block border border-console-cyan text-console-cyan font-mono text-xs px-2 py-1 mb-6 animate-pulse">
+                STATUT : EN ÉTUDE ET RECHERCHE ÉCOLE BAC +3
+            </div>
+            <h2 class="text-4xl sm:text-6xl font-bold text-white mb-6 leading-tight">
+                Discipliné.<br>
+                <span class="text-console-magenta">Technique.</span><br>
+                Persévérant.
+            </h2>
+            
+            <!-- ========================================================= -->
+            <!-- ✏️ CHANGE ICI : TA PETITE HISTOIRE (Pour te présenter)    -->
+            <!-- ========================================================= -->
+            <p class="text-gray-400 text-lg sm:text-xl max-w-lg mb-8 font-sans">
+                Futur régisseur et technicien audiovisuel. Je structure l'image, la lumière et le son avec rigueur. Voici l'interface de mes projets.
+            </p>
+            
+            <button onclick="document.getElementById('gallery').scrollIntoView({behavior: 'smooth'})" class="bg-transparent border border-gray-600 text-white hover:border-console-cyan hover:text-console-cyan font-mono px-6 py-3 transition-all duration-300 uppercase tracking-widest text-sm focus:outline-none">
+                [ Initialiser la Galerie ]
+            </button>
+        </div>
+
+        <!-- 🧪 TES SUPER-POUVOIRS (Les barres qui bougent) -->
+        <div class="hidden lg:flex flex-col gap-4 p-8 bg-console-panel rounded border border-gray-800">
+            <div class="font-mono text-xs text-gray-500 mb-2">OUTPUT_LEVELS</div>
+            <div class="flex gap-4 h-40 items-end">
+                <!-- ========================================================= -->
+                <!-- ✏️ CHANGE ICI : LE NOM DE TES SUPER-POUVOIRS              -->
+                <!-- Pour changer la force d'un pouvoir, change le "height: 85%"-->
+                <!-- ========================================================= -->
+                <div class="flex-1 flex flex-col items-center gap-2 h-full">
+                    <div class="w-full bg-gray-800 relative overflow-hidden rounded-sm flex-grow">
+                        <div class="absolute bottom-0 w-full bg-console-green animate-[pulse_1s_ease-in-out_infinite]" style="height: 85%;"></div>
+                    </div>
+                    <span class="font-mono text-[10px] text-gray-400 uppercase">Réalisation</span>
+                </div>
+                <div class="flex-1 flex flex-col items-center gap-2 h-full">
+                    <div class="w-full bg-gray-800 relative overflow-hidden rounded-sm flex-grow">
+                        <div class="absolute bottom-0 w-full bg-console-cyan animate-[pulse_1.2s_ease-in-out_infinite]" style="height: 60%;"></div>
+                    </div>
+                    <span class="font-mono text-[10px] text-gray-400 uppercase">Image</span>
+                </div>
+                <div class="flex-1 flex flex-col items-center gap-2 h-full">
+                    <div class="w-full bg-gray-800 relative overflow-hidden rounded-sm flex-grow">
+                        <div class="absolute bottom-0 w-full bg-console-yellow animate-[pulse_0.8s_ease-in-out_infinite]" style="height: 75%;"></div>
+                    </div>
+                    <span class="font-mono text-[10px] text-gray-400 uppercase">Son</span>
+                </div>
+                <div class="flex-1 flex flex-col items-center gap-2 h-full">
+                    <div class="w-full bg-gray-800 relative overflow-hidden rounded-sm flex-grow">
+                        <div class="absolute bottom-0 w-full bg-console-magenta animate-[pulse_1.5s_ease-in-out_infinite]" style="height: 45%;"></div>
+                    </div>
+                    <span class="font-mono text-[10px] text-gray-400 uppercase">Lumière</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 🖼️ TON MUR DE DESSINS (La grande galerie) -->
+    <section id="gallery" class="w-full bg-console-panel py-16 border-t border-gray-800 flex-grow relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="flex justify-between items-end mb-8 border-b border-gray-800 pb-4">
+                <h3 class="font-mono text-2xl text-white uppercase"><span class="text-console-yellow">#</span> BASE_DE_DONNÉES_VISUELLES</h3>
+                <span class="font-mono text-xs text-gray-500">ITEMS: <span id="compteur-images">20</span></span>
+            </div>
+
+            <!-- C'est ici que les images vont venir s'empiler toutes seules comme des briques Lego -->
+            <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+                <!-- Magie en cours... -->
+            </div>
+        </div>
+    </section>
+
+    <!-- 📮 LA BOÎTE AUX LETTRES (Le Footer tout en bas) -->
+    <footer id="contact" class="bg-console-bg py-12 border-t border-gray-800 text-center sm:text-left relative z-0">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row justify-between items-center gap-6">
+            <div>
+                <p class="font-mono text-console-cyan mb-2">>>> PRÊT POUR LE DIRECT</p>
+                <!-- ========================================================= -->
+                <!-- ✏️ CHANGE ICI : TON ADRESSE MAIL (Pour qu'on t'écrive)    -->
+                <!-- ========================================================= -->
+                <a href="mailto:ton.email@exemple.com" class="text-2xl font-bold text-white hover:text-console-magenta transition-colors">
+                    nohamds42@gmail.com
+                </a>
+            </div>
+            <div class="flex gap-4">
+                <!-- ========================================================= -->
+                <!-- ✏️ CHANGE ICI : LE CHEMIN VERS TON LINKEDIN ET TON CV     -->
+                <!-- Remplaces le petit '#' par ta vraie adresse internet !    -->
+                <!-- ========================================================= -->
+                <a href="https://www.linkedin.com/in/noham-da-silva-b69139344/" target="_blank" class="font-mono text-sm text-gray-400 hover:text-white border border-gray-700 hover:border-white px-4 py-2 transition-all">
+                    LINKEDIN
+                </a>
+                <a href="CV Noham.pdf" target="_blank" class="font-mono text-sm text-gray-400 hover:text-white border border-gray-700 hover:border-white px-4 py-2 transition-all">
+                    CV_PDF
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // =========================================================================
+        // 🎨 LE COFFRE À JOUETS : METS TES IMAGES ET TES TEXTES ICI !
+        // =========================================================================
+        // 
+        // 🚨 PETIT SECRET POUR TES IMAGES :
+        // Si tes images sont bien rangées dans ton dossier "image", tu dois 
+        // juste écrire "image/le-nom-de-ton-image.jpg"
+        // 
+        // Exemple : image: "image/mon-super-tournage.jpg"
+        // =========================================================================
+
+        const mesProjets = [
+            {
+                titre: "Ingé son sur YAMAHA DM7",
+                image: "image/Yamaha DM7.jpg", // <-- EFFACE ÇA ET METS TON LIEN !
+                lieu: "Région AURA",
+                date: "2026",
+                statut: "VALIDÉ"
+            },
+            {
+                titre: "VISTA 3",
+                image: "image/Vista 3.jpg", // <-- EFFACE ÇA ET METS TON LIEN !
+                lieu: "Région AURA",
+                date: "2026",
+                statut: "EN MONTAGE"
+            },
+            {
+                titre: "SOUNDCAFT EPM6 & YAMAHA MG16",
+                image: "image/soundcraft epm 6 et Yamaha MG16.jpg", // <-- EFFACE ÇA ET METS TON LIEN !
+                lieu: "Région AURA",
+                date: "2026",
+                statut: "ARCHIVÉ"
+            },
+            {
+                titre: "Plateau pour concert d'air guitard",
+                image: "image/plateau 2.jpg", // <-- EFFACE ÇA ET METS TON LIEN !
+                lieu: "BTS MAV",
+                date: "2026",
+                statut: "VALIDÉ"
+            },
+            {
+                titre: "Mont de la balle SQ7",
+                image: "image/allen and heath sq7 Mont de la balle.jpg", // <-- EFFACE ÇA ET METS TON LIEN !
+                lieu: "Verrières-en-forez",
+                date: "2023",
+                statut: "EN MONTAGE"
+            },
+            {
+                titre: "Mont de la balle",
+                image: "image/crop mont de la balle 2023.jpg", // <-- EFFACE ÇA ET METS TON LIEN !
+                lieu: "Verrières-en-forez",
+                date: "2023",
+                statut: "ARCHIVÉ"
+            },
+            {
+                titre: "Behringer X32",
+                image: "image/behringer X32.jpg", // <-- EFFACE ÇA ET METS TON LIEN !
+                lieu: "Région AURA",
+                date: "2026",
+                statut: "EN MONTAGE"
+            },
+            {
+                titre: "Plateau TMO",
+                image: "image/plateau 3.jpg", // <-- EFFACE ÇA ET METS TON LIEN !
+                lieu: "BTS MAV",
+                date: "2026",
+                statut: "VALIDÉ"
+            },
+            {
+                titre: "Foire de Saint Joseph",
+                image: "image/Saint J.jpg", // <-- EFFACE ÇA ET METS TON LIEN !
+                lieu: "Saint Joseph",
+                date: "2025",
+                statut: "ARCHIVÉ"
+            },
+            {
+                titre: "Mélangeur TC410",
+                image: "image/TC410.png", // <-- EFFACE ÇA ET METS TON LIEN !
+                lieu: "Région AURA",
+                date: "2026",
+                statut: "EN MONTAGE"
+            },
+            {
+                titre: "Cueliste sur Vista 3",
+                image: "image/Cueliste sur Vista 3.png", // <-- EFFACE ÇA ET METS TON LIEN !
+                lieu: "Région AURA",
+                date: "2026",
+                statut: "EN MONTAGE"
+            },
+            {
+                titre: "Yamaha DM7",
+                image: "image/DM7.jpg", // <-- EFFACE ÇA ET METS TON LIEN !
+                lieu: "Région AURA",
+                date: "2026",
+                statut: "VALIDÉ"
+            },
+            {
+                titre: "Réalisation mélangeur sur TC2",
+                image: "image/mélangeur TC2.jpg", // <-- EFFACE ÇA ET METS TON LIEN !
+                lieu: "Région AURA",
+                date: "2026",
+                statut: "VALIDÉ"
+            },
+            {
+                titre: "Festival complètement Gaga Midas M32",
+                image: "image/midas m32 Festival complètement Gaga.jpg", // <-- EFFACE ÇA ET METS TON LIEN !
+                lieu: "Saint-Étienne",
+                date: "2025",
+                statut: "ARCHIVÉ"
+            },
+            {
+                titre: "Instalation de parKolor et silmKolor",
+                image: "image/parKolor et silmKolor.jpg", // <-- EFFACE ÇA ET METS TON LIEN !
+                lieu: "Région AURA",
+                date: "2026",
+                statut: "VALIDÉ"
+            },
+            {
+                titre: "Yamaha DM3",
+                image: "image/Yamaha DM3.png", // <-- EFFACE ÇA ET METS TON LIEN !
+                lieu: "Région AURA",
+                date: "2026",
+                statut: "EN MONTAGE"
+            },
+            {
+                titre: "Régie BTS MAV",
+                image: "image/régie Greta.jpg", // <-- EFFACE ÇA ET METS TON LIEN !
+                lieu: "BTS MAV",
+                date: "2026",
+                statut: "ARCHIVÉ"
+            },
+            {
+                titre: "Radio Ici, antenne de Saint-Étienne",
+                image: "image/radio France bleu.png", // <-- EFFACE ÇA ET METS TON LIEN !
+                lieu: "Saint-Étienne",
+                date: "2024",
+                statut: "ARCHIVÉ"
+            },
+            {
+                titre: "Ingé lumière bis",
+                image: "image/console light.jpg", // <-- EFFACE ÇA ET METS TON LIEN !
+                lieu: "Puy-en-velay",
+                date: "2026",
+                statut: "VALIDÉ"
+            },
+            {
+                titre: "Ingé lumière ter",
+                image: "image/ingé_light_EPS.jpg", // <-- EFFACE ÇA ET METS TON LIEN !
+                lieu: "Puy-en-velay",
+                date: "2026",
+                statut: "VALIDÉ"
+            },
+
+            
+            // ⬇️ AJOUTE TES AUTRES PHOTOS ICI COMME DANS LES EXEMPLES AU-DESSUS ⬇️
+        ];
+
+        // ⚙️ CHUT ! LE MOTEUR TRAVAILLE (Ne touche plus rien en dessous d'ici)
+        // Ce bout de code bouche les trous si tu n'as pas encore mis tes 20 photos.
+        const nbProjetsVoulus = 20;
+        for (let i = mesProjets.length; i < nbProjetsVoulus; i++) {
+            mesProjets.push({
+                titre: `PROJET_TEST_${i + 1}`,
+                image: `https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?auto=format&fit=crop&q=80&w=800&h=800&sig=${i + 1}`,
+                format: "INCONNU",
+                resolution: "1080x1080",
+                statut: "EN ATTENTE"
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const grid = document.getElementById('gallery-grid');
+            
+            mesProjets.forEach((projet, index) => {
+                const num = (index + 1).toString().padStart(2, '0');
+                
+                // Explication de la magie du survol (pour les petits curieux) :
+                // 1. 🖼️ L'image de base : Elle est coupée en carré et toute grise.
+                // 2. ⚡ L'étiquette rapide : Elle s'allume tout de suite quand tu la touches avec la souris !
+                // 3. 🚀 L'image magique géante : Elle attend un peu (600ms), puis elle grandit. Si tu enlèves ta souris, pouf, elle part super vite en 150ms pour ne pas gêner !
+                
+                const cardHTML = `
+                    <div class="relative aspect-square bg-gray-900 border border-gray-800 group cursor-crosshair">
+                        
+                        <!-- 🖼️ 1. Ton image normale (Coupée en carré, centrée, Grise) -->
+                        <img src="${projet.image}" 
+                             alt="${projet.titre}" 
+                             class="absolute inset-0 w-full h-full object-cover grayscale transition-all duration-300 group-hover:grayscale-0 z-0">
+                        
+                        <!-- ⚡ 2. L'étiquette rapide (Apparaît DIRECTEMENT quand tu passes la souris) -->
+                        <div class="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col justify-end p-4 border-[3px] border-transparent group-hover:border-console-green z-10 pointer-events-none">
+                            <div class="font-mono text-xs text-console-green mb-1">> SÉQUENCE SÉLECTIONNÉE</div>
+                            <h4 class="font-mono text-lg text-white mb-2 uppercase truncate" title="${projet.titre}">${projet.titre}</h4>
+                            <div class="flex flex-col gap-1 font-mono text-[10px] text-gray-400 border-t border-gray-700 pt-2">
+                                <span>LIEU : ${projet.lieu}</span>
+                                <span>DATE : ${projet.date}</span>
+                                <span class="text-console-cyan">STATUT : ${projet.statut}</span>
+                            </div>
+                        </div>
+
+                        <!-- 🚀 3. L'image géante (Prend son temps pour apparaître, part très vite !) -->
+                        <!-- Le secret : 'delay-0 duration-150' quand elle s'en va, et 'group-hover:delay-[600ms] group-hover:duration-500' quand elle apparaît ! -->
+                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full opacity-0 z-0 pointer-events-none transition-all duration-150 delay-0 group-hover:duration-500 group-hover:delay-[600ms] group-hover:opacity-100 group-hover:z-50 group-hover:w-[120%] group-hover:h-[120%] sm:group-hover:w-[150%] sm:group-hover:h-[150%]">
+                            
+                            <!-- L'image dans son vrai format -->
+                            <img src="${projet.image}" alt="${projet.titre}" class="w-full h-full object-contain drop-shadow-2xl bg-console-bg p-2 border border-gray-700">
+                            
+                            <!-- Panneau d'informations collé sur la grande image -->
+                            <div class="absolute bottom-2 left-2 right-2 bg-black/90 p-4 border-[3px] border-console-green flex flex-col justify-end">
+                                <div class="font-mono text-xs text-console-green mb-1">> SÉQUENCE SÉLECTIONNÉE</div>
+                                <h4 class="font-mono text-lg text-white mb-2 uppercase truncate" title="${projet.titre}">${projet.titre}</h4>
+                                <div class="flex flex-col gap-1 font-mono text-[10px] text-gray-400 border-t border-gray-700 pt-2">
+                                    <span>LIEU : ${projet.lieu}</span>
+                                    <span>DATE : ${projet.date}</span>
+                                    <span class="text-console-cyan">STATUT : ${projet.statut}</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 🏷️ 4. Petit numéro secret (Toujours visible en haut à gauche) -->
+                        <div class="absolute top-2 left-2 font-mono text-[10px] text-gray-500 bg-black/80 px-1 z-20 pointer-events-none">
+                            IMG_${num}
+                        </div>
+                    </div>
+                `;
+                
+                grid.insertAdjacentHTML('beforeend', cardHTML);
+            });
+        });
+    </script>
+</body>
+</html>
