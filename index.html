@@ -1,419 +1,801 @@
 <!DOCTYPE html>
-<html lang="fr" class="scroll-smooth">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio - DA SILVA Noham</title>
+    <title>Portfolio - Technicien Audiovisuel</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    
-    <script>
-        /* 🎨 ICI ON CHOISIT LES COULEURS DE TES FEUTRES MAGIQUES */
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        mono: ['Space Mono', 'monospace'],
-                    },
-                    colors: {
-                        console: {
-                            bg: '#121212', // Noir profond comme l'espace
-                            panel: '#1E1E1E', // Gris foncé pour les boîtes
-                            cyan: '#00F0FF', // Bleu laser brillant
-                            magenta: '#FF003C', // Rose fluo rigolo
-                            yellow: '#FCEE0A', // Jaune soleil
-                            green: '#00FF66' // Vert extraterrestre
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
-        body { background-color: #121212; color: #E0E0E0; }
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #121212; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #00F0FF; }
+        :root {
+            --console-bg: #1e1e24;
+            --console-border: #3a3a44;
+            --panel-bg: #26262d;
+            --screen-bg: #0f111a;
+            --btn-dark: #333;
+            --btn-light: #e0e0e0;
+            --glow-green: #00ff66;
+            --glow-orange: #ff9900;
+            --glow-blue: #00ccff;
+            --fader-track: #0a0a0c;
+        }
+
+        body {
+            background-color: #121215;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at 50% 50%, #2a2a35 0%, #121215 100%);
+        }
+
+        .console-chassis {
+            background: linear-gradient(180deg, #2a2a32 0%, #1a1a20 100%);
+            border-radius: 24px;
+            box-shadow: 
+                0 20px 50px rgba(0,0,0,0.8),
+                inset 0 2px 4px rgba(255,255,255,0.1),
+                inset 0 -5px 15px rgba(0,0,0,0.5);
+            padding: 30px;
+            width: 1100px;
+            max-width: 95vw;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            border: 1px solid var(--console-border);
+            position: relative;
+        }
+
+        /* Screen Styling */
+        .screen-container {
+            background: var(--screen-bg);
+            border: 16px solid #111;
+            border-radius: 12px;
+            height: 380px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.8), 0 5px 15px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .screen-glass {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 50%, rgba(0,0,0,0.2) 100%);
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .hw-btn {
+            background: linear-gradient(180deg, #555 0%, #333 100%);
+            border: 1px solid #222;
+            border-radius: 4px;
+            color: #ccc;
+            font-size: 0.65rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            box-shadow: 0 3px 5px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.2);
+            transition: all 0.1s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .hw-btn:active {
+            box-shadow: 0 1px 2px rgba(0,0,0,0.5), inset 0 2px 4px rgba(0,0,0,0.5);
+            transform: translateY(2px);
+        }
+
+        .hw-btn.active-green {
+            background: linear-gradient(180deg, #1a4a2a 0%, #0a2a1a 100%);
+            color: var(--glow-green);
+            border-color: var(--glow-green);
+            text-shadow: 0 0 5px var(--glow-green);
+            box-shadow: 0 0 10px rgba(0, 255, 102, 0.4), inset 0 1px 1px rgba(255,255,255,0.2);
+        }
+
+        .hw-btn.active-orange {
+            background: linear-gradient(180deg, #5a3a1a 0%, #3a1a0a 100%);
+            color: var(--glow-orange);
+            border-color: var(--glow-orange);
+            text-shadow: 0 0 5px var(--glow-orange);
+            box-shadow: 0 0 10px rgba(255, 153, 0, 0.4), inset 0 1px 1px rgba(255,255,255,0.2);
+        }
+
+        .hw-btn.active-blue {
+            background: linear-gradient(180deg, #1a3a5a 0%, #0a1a3a 100%);
+            color: var(--glow-blue);
+            border-color: var(--glow-blue);
+            text-shadow: 0 0 5px var(--glow-blue);
+            box-shadow: 0 0 10px rgba(0, 204, 255, 0.4), inset 0 1px 1px rgba(255,255,255,0.2);
+        }
+
+        .fader-section {
+            background: var(--panel-bg);
+            border-radius: 8px;
+            padding: 15px;
+            border: 1px solid var(--console-border);
+        }
+
+        .fader-track-container {
+            position: relative;
+            height: 250px;
+            width: 40px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .fader-track {
+            position: absolute;
+            top: 10px;
+            bottom: 10px;
+            width: 8px;
+            background: var(--fader-track);
+            border-radius: 4px;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.8), 0 1px 0 rgba(255,255,255,0.1);
+        }
+
+        .fader-knob {
+            position: absolute;
+            width: 24px;
+            height: 44px;
+            background: linear-gradient(90deg, #d4d4d4 0%, #f0f0f0 20%, #e0e0e0 50%, #b0b0b0 80%, #999 100%);
+            border-radius: 4px;
+            box-shadow: 
+                0 10px 15px rgba(0,0,0,0.5),
+                inset 0 2px 2px rgba(255,255,255,0.8),
+                inset 0 -2px 4px rgba(0,0,0,0.3);
+            cursor: grab;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+            bottom: 0%; /* Dynamic */
+        }
         
-        /* 🕹️ LES PETITS BOUTONS FAÇON INTERRUPTEUR DE LUMIÈRE */
-        .toggle-switch { position: relative; display: inline-block; width: 44px; height: 24px; }
-        .toggle-switch input { opacity: 0; width: 0; height: 0; }
-        .toggle-slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .4s; border-radius: 24px; border: 1px solid #555; }
-        .toggle-slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: #888; transition: .4s; border-radius: 50%; }
-        input:checked + .toggle-slider { background-color: #00F0FF; border-color: #00F0FF; box-shadow: 0 0 10px rgba(0, 240, 255, 0.5); }
-        input:checked + .toggle-slider:before { transform: translateX(20px); background-color: #121212; }
+        .fader-knob::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: #222;
+            transform: translateY(-50%);
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.8);
+        }
+
+        .fader-knob:active {
+            cursor: grabbing;
+        }
+
+        .fader-knob.main-fader {
+            background: linear-gradient(90deg, #d64545 0%, #ff5c5c 20%, #f04040 50%, #b02020 80%, #801010 100%);
+        }
+        .fader-knob.main-fader::after {
+            background: #fff;
+            opacity: 0.8;
+        }
+
+        /* Marks next to fader */
+        .fader-marks {
+            position: absolute;
+            left: 100%;
+            top: 10px;
+            bottom: 10px;
+            width: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding-left: 4px;
+        }
+        .fader-mark {
+            height: 1px;
+            background: #555;
+            width: 6px;
+        }
+        .fader-mark:nth-child(even) { width: 4px; background: #444; }
+
+        /* Scribble Strip (LCD Screen above fader) */
+        .scribble-strip {
+            background: #111;
+            border: 2px solid #333;
+            border-radius: 4px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            color: #0cf;
+            text-transform: uppercase;
+            box-shadow: inset 0 0 5px rgba(0,204,255,0.2);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            padding: 0 2px;
+        }
+
+        .rotary-knob {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: conic-gradient(from 180deg, #777, #ccc, #777, #444, #777);
+            box-shadow: 
+                0 5px 10px rgba(0,0,0,0.6),
+                inset 0 2px 2px rgba(255,255,255,0.5),
+                inset 0 -2px 5px rgba(0,0,0,0.5);
+            position: relative;
+            margin: 0 auto;
+        }
+        .rotary-knob::before {
+            content: '';
+            position: absolute;
+            top: 10%; left: 10%; right: 10%; bottom: 10%;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #555, #222);
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.8);
+        }
+
+        .screen-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 17, 26, 0.95);
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .screen-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Grid layouts */
+        .top-panel {
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 20px;
+        }
+        .bottom-panel {
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 20px;
+        }
+
+        @media (max-width: 1024px) {
+            .console-chassis { transform: scale(0.8); transform-origin: top center; margin-bottom: -150px; }
+        }
+        @media (max-width: 768px) {
+            .console-chassis { transform: scale(0.5); transform-origin: top center; margin-bottom: -400px; }
+        }
     </style>
 </head>
-<body class="antialiased min-h-screen flex flex-col overflow-x-hidden">
+<body>
 
-    <!-- 🚁 LA BARRE DU HAUT QUI TE SUIT PARTOUT -->
-    <header class="sticky top-0 z-50 bg-console-bg/90 backdrop-blur-md border-b border-gray-800 p-4 sm:p-6">
-        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+    <div class="console-chassis">
+        
+        <!-- TOP PANEL (Screen & Top Controls) -->
+        <div class="top-panel">
             
-            <div class="flex flex-col items-center sm:items-start">
+            <!-- MAIN SCREEN -->
+            <div class="screen-container" id="main-screen">
+                <div class="screen-glass"></div>
                 
-                <!-- ========================================================= -->
-                <!-- ✏️ CHANGE ICI : TON SUPER NOM DE HÉROS (En haut à gauche) -->
-                <!-- ========================================================= -->
-                <h1 class="font-mono text-xl sm:text-2xl font-bold text-white uppercase tracking-wider">
-                    <span class="text-console-cyan">></span> Noham DA SILVA
-                </h1>
-                <p class="font-mono text-xs text-gray-500 uppercase mt-1">SYS.RÉGIE // BTS TIEE</p>
+                <!-- Status Bar -->
+                <div class="bg-gray-800 text-gray-300 text-xs px-3 py-1 flex justify-between items-center border-b border-gray-600 relative z-10">
+                    <div class="flex space-x-4">
+                        <span id="screen-bank-name" class="font-bold text-white">PROJETS PRO</span>
+                        <span id="screen-active-cat" class="text-green-400">SEL: LUMIÈRE</span>
+                    </div>
+                    <div class="flex space-x-3">
+                        <span>48kHz</span>
+                        <span id="clock">12:00:00</span>
+                    </div>
+                </div>
+
+                <!-- Image Viewer -->
+                <div class="relative w-full h-[calc(100%-28px)] bg-black z-0">
+                    <img id="viewer-img" src="https://placehold.co/800x450/1a1a24/00ccff?text=Bougez+un+fader+pour+commencer" class="w-full h-full object-cover opacity-80 transition-opacity duration-300" alt="Portfolio Image">
+                    
+                    <!-- Metadata HUD (Always visible subtly, or pops when UDK pressed) -->
+                    <div id="metadata-hud" class="absolute bottom-4 left-4 bg-black/60 text-white p-3 rounded border border-gray-600 text-sm hidden">
+                        <p class="text-xs text-gray-400 mb-1" id="hud-label">INFO</p>
+                        <p class="font-bold text-lg text-blue-300" id="hud-value">---</p>
+                    </div>
+
+                    <!-- Fader Notch Indicator -->
+                    <div class="absolute right-4 top-1/2 transform -translate-y-1/2 flex flex-col gap-1" id="notch-indicator">
+                        <!-- Dots populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Menu Overlay (About Me) -->
+                <div id="menu-overlay" class="screen-overlay">
+                    <h2 class="text-3xl font-bold text-white mb-2 tracking-widest">ABOUT ME</h2>
+                    <div class="w-16 h-1 bg-blue-500 mb-4"></div>
+                    <p class="text-gray-300 mb-4 max-w-md">
+                        Bonjour, je suis technicien audiovisuel polyvalent. 
+                        Passionné par l'image et le son, j'interviens sur la lumière, la réalisation, le son et le montage. 
+                        Ce portfolio (inspiré de la DM3) reflète mon approche technique et créative.
+                    </p>
+                    <div class="bg-gray-800 p-4 rounded border border-gray-600 w-full max-w-md text-left">
+                        <p class="text-green-400 text-sm mb-1">> CONTACT</p>
+                        <p>Email: contact@mon-portfolio.fr</p>
+                        <p>Tel: +33 6 12 34 56 78</p>
+                        <p>Web: www.mon-portfolio.fr</p>
+                    </div>
+                </div>
             </div>
 
-            <nav class="flex gap-6 items-center">
-                <label class="flex items-center gap-2 cursor-pointer group">
-                    <span class="font-mono text-xs text-gray-400 group-hover:text-console-cyan transition-colors">GALERIE</span>
-                    <div class="toggle-switch">
-                        <input type="radio" name="nav-toggle" checked onchange="document.getElementById('gallery').scrollIntoView({behavior: 'smooth'})">
-                        <span class="toggle-slider"></span>
+            <div class="fader-section flex flex-col items-center justify-between">
+                
+                <!-- USB & Phones -->
+                <div class="w-full flex justify-between px-4">
+                    <div class="flex flex-col items-center">
+                        <div class="w-10 h-4 bg-black border border-gray-600 rounded-sm mb-1 flex items-center justify-center">
+                            <div class="w-6 h-1 bg-gray-400"></div>
+                        </div>
+                        <span class="text-[10px] text-gray-400">USB</span>
                     </div>
-                </label>
-                <label class="flex items-center gap-2 cursor-pointer group">
-                    <span class="font-mono text-xs text-gray-400 group-hover:text-console-magenta transition-colors">CONTACT</span>
-                    <div class="toggle-switch">
-                        <input type="radio" name="nav-toggle" onchange="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">
-                        <span class="toggle-slider"></span>
+                    <div class="flex flex-col items-center">
+                        <div class="w-8 h-8 rounded-full border-2 border-gray-600 bg-gray-800 relative">
+                            <div class="absolute top-1 left-1/2 w-1 h-2 bg-white transform -translate-x-1/2"></div>
+                        </div>
+                        <span class="text-[10px] text-gray-400 mt-1">PHONES LEVEL</span>
                     </div>
-                </label>
-            </nav>
+                </div>
+
+                <!-- Brand Logo -->
+                <div class="text-center my-4">
+                    <h1 class="text-2xl font-bold tracking-widest text-gray-200" style="font-family: Arial, sans-serif;">PORTFOLIO</h1>
+                    <p class="text-[10px] tracking-widest text-gray-400 mt-1">DIGITAL MIXING CONSOLE</p>
+                    <p class="text-lg font-bold text-gray-300 tracking-widest">DM3</p>
+                </div>
+
+                <!-- Touch & Turn -->
+                <div class="text-center w-full bg-gray-800/50 p-3 rounded border border-gray-700">
+                    <div class="rotary-knob mb-2"></div>
+                    <div class="bg-white text-black text-[10px] font-bold px-2 py-1 inline-block rounded-sm uppercase tracking-wider">Touch and Turn</div>
+                </div>
+            </div>
         </div>
-    </header>
 
-    <!-- 🏰 LE GRAND CHÂTEAU D'ACCUEIL (Ta présentation) -->
-    <section class="max-w-7xl mx-auto w-full px-4 sm:px-6 py-12 sm:py-24 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-        <div>
-            <div class="inline-block border border-console-cyan text-console-cyan font-mono text-xs px-2 py-1 mb-6 animate-pulse">
-                STATUT : EN ÉTUDE ET RECHERCHE ÉCOLE BAC +3
-            </div>
-            <h2 class="text-4xl sm:text-6xl font-bold text-white mb-6 leading-tight">
-                Discipliné.<br>
-                <span class="text-console-magenta">Technique.</span><br>
-                Persévérant.
-            </h2>
+        <div class="bottom-panel">
             
-            <!-- ========================================================= -->
-            <!-- ✏️ CHANGE ICI : TA PETITE HISTOIRE (Pour te présenter)    -->
-            <!-- ========================================================= -->
-            <p class="text-gray-400 text-lg sm:text-xl max-w-lg mb-8 font-sans">
-                Futur régisseur et technicien audiovisuel. Je structure l'image, la lumière et le son avec rigueur. Voici l'interface de mes projets.
-            </p>
-            
-            <button onclick="document.getElementById('gallery').scrollIntoView({behavior: 'smooth'})" class="bg-transparent border border-gray-600 text-white hover:border-console-cyan hover:text-console-cyan font-mono px-6 py-3 transition-all duration-300 uppercase tracking-widest text-sm focus:outline-none">
-                [ Initialiser la Galerie ]
-            </button>
-        </div>
-
-        <!-- 🧪 TES SUPER-POUVOIRS (Les barres qui bougent) -->
-        <div class="hidden lg:flex flex-col gap-4 p-8 bg-console-panel rounded border border-gray-800">
-            <div class="font-mono text-xs text-gray-500 mb-2">OUTPUT_LEVELS</div>
-            <div class="flex gap-4 h-40 items-end">
-                <!-- ========================================================= -->
-                <!-- ✏️ CHANGE ICI : LE NOM DE TES SUPER-POUVOIRS              -->
-                <!-- Pour changer la force d'un pouvoir, change le "height: 85%"-->
-                <!-- ========================================================= -->
-                <div class="flex-1 flex flex-col items-center gap-2 h-full">
-                    <div class="w-full bg-gray-800 relative overflow-hidden rounded-sm flex-grow">
-                        <div class="absolute bottom-0 w-full bg-console-green animate-[pulse_1s_ease-in-out_infinite]" style="height: 85%;"></div>
-                    </div>
-                    <span class="font-mono text-[10px] text-gray-400 uppercase">Réalisation</span>
-                </div>
-                <div class="flex-1 flex flex-col items-center gap-2 h-full">
-                    <div class="w-full bg-gray-800 relative overflow-hidden rounded-sm flex-grow">
-                        <div class="absolute bottom-0 w-full bg-console-cyan animate-[pulse_1.2s_ease-in-out_infinite]" style="height: 60%;"></div>
-                    </div>
-                    <span class="font-mono text-[10px] text-gray-400 uppercase">Image</span>
-                </div>
-                <div class="flex-1 flex flex-col items-center gap-2 h-full">
-                    <div class="w-full bg-gray-800 relative overflow-hidden rounded-sm flex-grow">
-                        <div class="absolute bottom-0 w-full bg-console-yellow animate-[pulse_0.8s_ease-in-out_infinite]" style="height: 75%;"></div>
-                    </div>
-                    <span class="font-mono text-[10px] text-gray-400 uppercase">Son</span>
-                </div>
-                <div class="flex-1 flex flex-col items-center gap-2 h-full">
-                    <div class="w-full bg-gray-800 relative overflow-hidden rounded-sm flex-grow">
-                        <div class="absolute bottom-0 w-full bg-console-magenta animate-[pulse_1.5s_ease-in-out_infinite]" style="height: 45%;"></div>
-                    </div>
-                    <span class="font-mono text-[10px] text-gray-400 uppercase">Lumière</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 🖼️ TON MUR DE DESSINS (La grande galerie) -->
-    <section id="gallery" class="w-full bg-console-panel py-16 border-t border-gray-800 flex-grow relative z-10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6">
-            <div class="flex justify-between items-end mb-8 border-b border-gray-800 pb-4">
-                <h3 class="font-mono text-2xl text-white uppercase"><span class="text-console-yellow">#</span> BASE_DE_DONNÉES_VISUELLES</h3>
-                <span class="font-mono text-xs text-gray-500">ITEMS: <span id="compteur-images">20</span></span>
+            <!-- FADERS AREA -->
+            <div class="fader-section flex justify-between" id="fader-board">
+                <!-- Channel strips will be generated by JS -->
             </div>
 
-            <!-- C'est ici que les images vont venir s'empiler toutes seules comme des briques Lego -->
-            <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-                <!-- Magie en cours... -->
-            </div>
-        </div>
-    </section>
+            <!-- RIGHT CONTROL PANEL (Banks & User Keys) -->
+            <div class="fader-section flex flex-col justify-between">
+                
+                <!-- Fader Bank -->
+                <div class="bg-gray-800/40 p-2 rounded border border-gray-700">
+                    <p class="text-[10px] text-center text-gray-400 mb-2 border-b border-gray-600 pb-1">FADER BANK (PAGES)</p>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button class="hw-btn active-green h-8 bank-btn" data-bank="0">PRO</button>
+                        <button class="hw-btn h-8 bank-btn" data-bank="1">PERSO</button>
+                        <button class="hw-btn h-8 bank-btn" data-bank="2">EVENT</button>
+                        <button class="hw-btn h-8 bank-btn" data-bank="3">ARCHIVE</button>
+                    </div>
+                </div>
 
-    <!-- 📮 LA BOÎTE AUX LETTRES (Le Footer tout en bas) -->
-    <footer id="contact" class="bg-console-bg py-12 border-t border-gray-800 text-center sm:text-left relative z-0">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row justify-between items-center gap-6">
-            <div>
-                <p class="font-mono text-console-cyan mb-2">>>> PRÊT POUR LE DIRECT</p>
-                <!-- ========================================================= -->
-                <!-- ✏️ CHANGE ICI : TON ADRESSE MAIL (Pour qu'on t'écrive)    -->
-                <!-- ========================================================= -->
-                <a href="mailto:ton.email@exemple.com" class="text-2xl font-bold text-white hover:text-console-magenta transition-colors">
-                    nohamds42@gmail.com
-                </a>
-            </div>
-            <div class="flex gap-4">
-                <!-- ========================================================= -->
-                <!-- ✏️ CHANGE ICI : LE CHEMIN VERS TON LINKEDIN ET TON CV     -->
-                <!-- Remplaces le petit '#' par ta vraie adresse internet !    -->
-                <!-- ========================================================= -->
-                <a href="https://www.linkedin.com/in/noham-da-silva-b69139344/" target="_blank" class="font-mono text-sm text-gray-400 hover:text-white border border-gray-700 hover:border-white px-4 py-2 transition-all">
-                    LINKEDIN
-                </a>
-                <a href="CV Noham.pdf" target="_blank" class="font-mono text-sm text-gray-400 hover:text-white border border-gray-700 hover:border-white px-4 py-2 transition-all">
-                    CV_PDF
-                </a>
+                <!-- Home / Menu Button -->
+                <div class="flex justify-center my-2">
+                    <button id="btn-home" class="hw-btn h-10 w-full rounded-full flex gap-2 items-center text-blue-200">
+                        <!-- Home Icon SVG -->
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+                        MENU / CONTACT
+                    </button>
+                </div>
+
+                <!-- User Defined Keys -->
+                <div class="bg-gray-800/40 p-2 rounded border border-gray-700 border-t-2 border-t-orange-500/50">
+                    <p class="text-[10px] text-center text-gray-400 mb-2">USER DEFINED KEYS (INFO)</p>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button class="hw-btn h-10 udk-btn" data-info="date">
+                            <span class="text-orange-400 text-[10px] absolute top-1 left-1">1</span>
+                            DATE
+                        </button>
+                        <button class="hw-btn h-10 udk-btn" data-info="location">
+                            <span class="text-orange-400 text-[10px] absolute top-1 left-1">2</span>
+                            LIEU
+                        </button>
+                        <button class="hw-btn h-10 udk-btn" data-info="role">
+                            <span class="text-orange-400 text-[10px] absolute top-1 left-1">3</span>
+                            RÔLE
+                        </button>
+                        <button class="hw-btn h-10 udk-btn" data-info="equipment">
+                            <span class="text-orange-400 text-[10px] absolute top-1 left-1">4</span>
+                            MATÉRIEL
+                        </button>
+                        <button class="hw-btn h-10 udk-btn" data-info="client">
+                            <span class="text-orange-400 text-[10px] absolute top-1 left-1">5</span>
+                            CLIENT
+                        </button>
+                        <button class="hw-btn h-10 udk-btn" data-info="none">
+                            <span class="text-orange-400 text-[10px] absolute top-1 left-1">6</span>
+                            FERMER
+                        </button>
+                    </div>
+                    <p class="text-[8px] text-center text-gray-500 mt-2 text-orange-400/50">■ METADATA</p>
+                </div>
+
             </div>
         </div>
-    </footer>
+    </div>
 
     <script>
-        // =========================================================================
-        // 🎨 LE COFFRE À JOUETS : METS TES IMAGES ET TES TEXTES ICI !
-        // =========================================================================
-        // 
-        // 🚨 PETIT SECRET POUR TES IMAGES :
-        // Si tes images sont bien rangées dans ton dossier "image", tu dois 
-        // juste écrire "image/le-nom-de-ton-image.jpg"
-        // 
-        // Exemple : image: "image/mon-super-tournage.jpg"
-        // =========================================================================
+        // --- DATA STRUCTURE ---
+        // 4 Banks (Pages), each containing 8 Categories (Faders). Each Category contains X images.
+        const colorPalette = ['#ff3366', '#33ccff', '#33ff66', '#ffcc00', '#cc33ff', '#ff6633', '#00ffcc', '#ff99cc'];
+        
+        // Helper to generate mock images
+        function genImg(text, bg, color) { return `https://placehold.co/800x450/${bg}/${color}?text=${encodeURIComponent(text)}`; }
 
-        const mesProjets = [
-            {
-                titre: "Ingé son sur YAMAHA DM7",
-                image: "image/Yamaha DM7.jpg", // <-- EFFACE ÇA ET METS TON LIEN !
-                lieu: "Région AURA",
-                date: "2026",
-                statut: "VALIDÉ"
+        const portfolioData = [
+            { // BANK 0: PRO
+                name: "PROJETS PRO",
+                channels: [
+                    { name: "LUMIÈRE", color: "text-blue-400", items: [
+                        { img: genImg("Concert Rock Zénith", "1a1a24", "00ccff"), date: "15 Mai 2025", location: "Zénith Paris", role: "Pupitreur Light", equipment: "GrandMA3", client: "Live Nation" },
+                        { img: genImg("Festival Electro", "2a1a24", "ff00cc"), date: "10 Juil 2025", location: "Lyon", role: "Light Designer", equipment: "Avolites Arena", client: "ElectroFest" },
+                        { img: genImg("Théâtre Classique", "1a2a1a", "00ffcc"), date: "02 Fev 2024", location: "Opéra", role: "Régisseur Lumière", equipment: "ETC Gio", client: "Troupe Molière" }
+                    ]},
+                    { name: "RÉAL", color: "text-red-400", items: [
+                        { img: genImg("Captation Live", "241a1a", "ff6600"), date: "22 Nov 2024", location: "Bercy", role: "Réalisateur", equipment: "Panasonic AW-UE150", client: "TV Broadcast" },
+                        { img: genImg("Clip Vidéo", "24241a", "ffff00"), date: "05 Mars 2025", location: "Studio 4", role: "Assistant Réal", equipment: "Blackmagic URSA", client: "Label Music" }
+                    ]},
+                    { name: "SON", color: "text-green-400", items: [
+                        { img: genImg("Mixage Façade", "1a2424", "00ffaa"), date: "18 Aout 2025", location: "Stade de France", role: "Ingénieur Son (FOH)", equipment: "Yamaha Rivage", client: "Mega Tour" },
+                        { img: genImg("Prise de Son Tournage", "241a24", "cc00ff"), date: "12 Avril 2024", location: "Paris", role: "Perchman", equipment: "Sound Devices", client: "Film Prod" },
+                        { img: genImg("Design Sonore", "111", "fff"), date: "01 Sept 2025", location: "Studio", role: "Sound Designer", equipment: "ProTools", client: "Jeu Vidéo X" },
+                        { img: genImg("Enregistrement Studio", "222", "ddd"), date: "10 Oct 2024", location: "Studio A", role: "Opérateur", equipment: "SSL Duality", client: "Groupe Y" }
+                    ]},
+                    { name: "CADRAGE", color: "text-yellow-400", items: [
+                        { img: genImg("Caméra Épaule", "332", "ffa"), date: "14 Juin 2025", location: "Marseille", role: "Cadreur", equipment: "Sony FX9", client: "Docu TV" }
+                    ]},
+                    { name: "MONTAGE", color: "text-purple-400", items: [
+                        { img: genImg("Montage Docu", "213", "eaf"), date: "Janvier 2025", location: "Télétravail", role: "Monteur", equipment: "Premiere Pro", client: "Arte" },
+                        { img: genImg("Étalonnage", "312", "fea"), date: "Fevrier 2025", location: "Post-Prod Studio", role: "Étalonneur", equipment: "DaVinci Resolve", client: "Indé Prod" }
+                    ]},
+                    { name: "RÉGIE", color: "text-orange-400", items: [
+                        { img: genImg("Régie Vidéo Corporate", "421", "ffe"), date: "08 Dec 2025", location: "La Défense", role: "Régisseur Vidéo", equipment: "Roland V-160HD", client: "Corp Inc" }
+                    ]},
+                    { name: "SCÉNO", color: "text-pink-400", items: [
+                        { img: genImg("Mapping Vidéo", "113", "fdf"), date: "31 Oct 2025", location: "Château X", role: "Technicien Vidéo", equipment: "Resolume", client: "Mairie" }
+                    ]},
+                    { name: "DIVERS", color: "text-gray-400", items: [
+                        { img: genImg("Installation Fixe", "222", "aaa"), date: "En cours", location: "Club Z", role: "Intégrateur", equipment: "Dante / Art-Net", client: "Club Z" }
+                    ]}
+                ]
             },
-            {
-                titre: "VISTA 3",
-                image: "image/Vista 3.jpg", // <-- EFFACE ÇA ET METS TON LIEN !
-                lieu: "Région AURA",
-                date: "2026",
-                statut: "EN MONTAGE"
+            { // BANK 1: PERSO (Mock data)
+                name: "PROJETS PERSO",
+                channels: Array(8).fill(null).map((_, i) => ({
+                    name: `PERSO ${i+1}`, color: "text-white", items: [
+                        { img: genImg(`Projet Perso ${i+1}.1`, "333", "fff"), date: "2023", location: "Maison", role: "Créateur", equipment: "PC", client: "Moi" },
+                        { img: genImg(`Projet Perso ${i+1}.2`, "444", "eee"), date: "2024", location: "Dehors", role: "Expérimentation", equipment: "Caméra", client: "Moi" }
+                    ]
+                }))
             },
-            {
-                titre: "SOUNDCAFT EPM6 & YAMAHA MG16",
-                image: "image/soundcraft epm 6 et Yamaha MG16.jpg", // <-- EFFACE ÇA ET METS TON LIEN !
-                lieu: "Région AURA",
-                date: "2026",
-                statut: "ARCHIVÉ"
-            },
-            {
-                titre: "Plateau pour concert d'air guitard",
-                image: "image/plateau 2.jpg", // <-- EFFACE ÇA ET METS TON LIEN !
-                lieu: "BTS MAV",
-                date: "2026",
-                statut: "VALIDÉ"
-            },
-            {
-                titre: "Mont de la balle SQ7",
-                image: "image/allen and heath sq7 Mont de la balle.jpg", // <-- EFFACE ÇA ET METS TON LIEN !
-                lieu: "Verrières-en-forez",
-                date: "2023",
-                statut: "EN MONTAGE"
-            },
-            {
-                titre: "Mont de la balle",
-                image: "image/crop mont de la balle 2023.jpg", // <-- EFFACE ÇA ET METS TON LIEN !
-                lieu: "Verrières-en-forez",
-                date: "2023",
-                statut: "ARCHIVÉ"
-            },
-            {
-                titre: "Behringer X32",
-                image: "image/behringer X32.jpg", // <-- EFFACE ÇA ET METS TON LIEN !
-                lieu: "Région AURA",
-                date: "2026",
-                statut: "EN MONTAGE"
-            },
-            {
-                titre: "Plateau TMO",
-                image: "image/plateau 3.jpg", // <-- EFFACE ÇA ET METS TON LIEN !
-                lieu: "BTS MAV",
-                date: "2026",
-                statut: "VALIDÉ"
-            },
-            {
-                titre: "Foire de Saint Joseph",
-                image: "image/Saint J.jpg", // <-- EFFACE ÇA ET METS TON LIEN !
-                lieu: "Saint Joseph",
-                date: "2025",
-                statut: "ARCHIVÉ"
-            },
-            {
-                titre: "Mélangeur TC410",
-                image: "image/TC410.png", // <-- EFFACE ÇA ET METS TON LIEN !
-                lieu: "Région AURA",
-                date: "2026",
-                statut: "EN MONTAGE"
-            },
-            {
-                titre: "Cueliste sur Vista 3",
-                image: "image/Cueliste sur Vista 3.png", // <-- EFFACE ÇA ET METS TON LIEN !
-                lieu: "Région AURA",
-                date: "2026",
-                statut: "EN MONTAGE"
-            },
-            {
-                titre: "Yamaha DM7",
-                image: "image/DM7.jpg", // <-- EFFACE ÇA ET METS TON LIEN !
-                lieu: "Région AURA",
-                date: "2026",
-                statut: "VALIDÉ"
-            },
-            {
-                titre: "Réalisation mélangeur sur TC2",
-                image: "image/mélangeur TC2.jpg", // <-- EFFACE ÇA ET METS TON LIEN !
-                lieu: "Région AURA",
-                date: "2026",
-                statut: "VALIDÉ"
-            },
-            {
-                titre: "Festival complètement Gaga Midas M32",
-                image: "image/midas m32 Festival complètement Gaga.jpg", // <-- EFFACE ÇA ET METS TON LIEN !
-                lieu: "Saint-Étienne",
-                date: "2025",
-                statut: "ARCHIVÉ"
-            },
-            {
-                titre: "Instalation de parKolor et silmKolor",
-                image: "image/parKolor et silmKolor.jpg", // <-- EFFACE ÇA ET METS TON LIEN !
-                lieu: "Région AURA",
-                date: "2026",
-                statut: "VALIDÉ"
-            },
-            {
-                titre: "Yamaha DM3",
-                image: "image/Yamaha DM3.png", // <-- EFFACE ÇA ET METS TON LIEN !
-                lieu: "Région AURA",
-                date: "2026",
-                statut: "EN MONTAGE"
-            },
-            {
-                titre: "Régie BTS MAV",
-                image: "image/régie Greta.jpg", // <-- EFFACE ÇA ET METS TON LIEN !
-                lieu: "BTS MAV",
-                date: "2026",
-                statut: "ARCHIVÉ"
-            },
-            {
-                titre: "Radio Ici, antenne de Saint-Étienne",
-                image: "image/radio France bleu.png", // <-- EFFACE ÇA ET METS TON LIEN !
-                lieu: "Saint-Étienne",
-                date: "2024",
-                statut: "ARCHIVÉ"
-            },
-            {
-                titre: "Ingé lumière bis",
-                image: "image/console light.jpg", // <-- EFFACE ÇA ET METS TON LIEN !
-                lieu: "Puy-en-velay",
-                date: "2026",
-                statut: "VALIDÉ"
-            },
-            {
-                titre: "Ingé lumière ter",
-                image: "image/ingé_light_EPS.jpg", // <-- EFFACE ÇA ET METS TON LIEN !
-                lieu: "Puy-en-velay",
-                date: "2026",
-                statut: "VALIDÉ"
-            },
-
-            
-            // ⬇️ AJOUTE TES AUTRES PHOTOS ICI COMME DANS LES EXEMPLES AU-DESSUS ⬇️
+            // Banks 2 & 3 filled similarly for the sake of completion to prevent errors
+            { name: "EVENT", channels: Array(8).fill(null).map((_, i) => ({ name: `EVT ${i+1}`, color: "text-white", items: [{ img: genImg(`Event ${i+1}`, "131", "dfd"), date: "-", location: "-", role: "-", equipment: "-", client: "-" }] })) },
+            { name: "ARCHIVE", channels: Array(8).fill(null).map((_, i) => ({ name: `ARC ${i+1}`, color: "text-white", items: [{ img: genImg(`Archive ${i+1}`, "311", "fdd"), date: "-", location: "-", role: "-", equipment: "-", client: "-" }] })) }
         ];
 
-        // ⚙️ CHUT ! LE MOTEUR TRAVAILLE (Ne touche plus rien en dessous d'ici)
-        // Ce bout de code bouche les trous si tu n'as pas encore mis tes 20 photos.
-        const nbProjetsVoulus = 20;
-        for (let i = mesProjets.length; i < nbProjetsVoulus; i++) {
-            mesProjets.push({
-                titre: `PROJET_TEST_${i + 1}`,
-                image: `https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?auto=format&fit=crop&q=80&w=800&h=800&sig=${i + 1}`,
-                format: "INCONNU",
-                resolution: "1080x1080",
-                statut: "EN ATTENTE"
+        // --- STATE ---
+        let currentBankIndex = 0;
+        let activeChannelIndex = 0; // 0 to 7
+        let faderValues = Array(9).fill(0); // 0 to 8 (8 is Main)
+        let isMenuOpen = false;
+        let activeMetadata = null;
+
+        // --- DOM ELEMENTS ---
+        const faderBoard = document.getElementById('fader-board');
+        const viewerImg = document.getElementById('viewer-img');
+        const screenBankName = document.getElementById('screen-bank-name');
+        const screenActiveCat = document.getElementById('screen-active-cat');
+        const menuOverlay = document.getElementById('menu-overlay');
+        const notchIndicator = document.getElementById('notch-indicator');
+        const metadataHud = document.getElementById('metadata-hud');
+        const hudLabel = document.getElementById('hud-label');
+        const hudValue = document.getElementById('hud-value');
+
+        function init() {
+            renderFaders();
+            updateScreen();
+            setupButtons();
+            setInterval(updateClock, 1000);
+            updateClock();
+            
+            // Set initial image (first item of first channel)
+            setActiveChannel(0);
+        }
+
+        function renderFaders() {
+            faderBoard.innerHTML = '';
+            const currentBank = portfolioData[currentBankIndex];
+
+            // Render 8 Channel Faders
+            for(let i=0; i<8; i++) {
+                const channelData = currentBank.channels[i];
+                const strip = document.createElement('div');
+                strip.className = 'flex flex-col items-center w-12 gap-2';
+                strip.innerHTML = `
+                    <div class="scribble-strip w-full ${channelData.color}">${channelData.name}</div>
+                    
+                    <button class="hw-btn w-full h-6 sel-btn" data-ch="${i}">SEL</button>
+                    <button class="hw-btn w-full h-6 cue-btn">CUE</button>
+                    <button class="hw-btn w-full h-6 on-btn active-orange">ON</button>
+                    
+                    <div class="fader-track-container mt-2">
+                        <div class="fader-track"></div>
+                        <div class="fader-marks">
+                            <div class="fader-mark"></div><div class="fader-mark"></div><div class="fader-mark"></div>
+                            <div class="fader-mark"></div><div class="fader-mark"></div><div class="fader-mark"></div>
+                            <div class="fader-mark"></div><div class="fader-mark"></div><div class="fader-mark"></div>
+                        </div>
+                        <div class="fader-knob" id="fader-${i}" data-ch="${i}" style="bottom: ${faderValues[i] * 100}%"></div>
+                    </div>
+                    <span class="text-[10px] text-gray-500 font-bold mt-1">${i+1}</span>
+                `;
+                faderBoard.appendChild(strip);
+            }
+
+            // Render Main Fader
+            const mainStrip = document.createElement('div');
+            mainStrip.className = 'flex flex-col items-center w-12 gap-2 ml-4 border-l border-gray-700 pl-4';
+            mainStrip.innerHTML = `
+                <div class="scribble-strip w-full text-red-500 bg-red-900/20">MAIN</div>
+                <button class="hw-btn w-full h-6">SEL</button>
+                <button class="hw-btn w-full h-6">CUE</button>
+                <button class="hw-btn w-full h-6 active-orange">ON</button>
+                <div class="fader-track-container mt-2">
+                    <div class="fader-track"></div>
+                    <div class="fader-marks">
+                        <div class="fader-mark"></div><div class="fader-mark"></div><div class="fader-mark"></div>
+                        <div class="fader-mark"></div><div class="fader-mark"></div><div class="fader-mark"></div>
+                        <div class="fader-mark"></div><div class="fader-mark"></div><div class="fader-mark"></div>
+                    </div>
+                    <div class="fader-knob main-fader" id="fader-8" data-ch="8" style="bottom: ${faderValues[8] * 100}%"></div>
+                </div>
+                <span class="text-[10px] text-gray-500 font-bold mt-1">MAIN</span>
+            `;
+            faderBoard.appendChild(mainStrip);
+
+            // Attach drag events to new faders
+            for(let i=0; i<=8; i++) {
+                setupFaderDrag(document.getElementById(`fader-${i}`), i);
+            }
+
+            // Re-attach SEL button listeners
+            document.querySelectorAll('.sel-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    setActiveChannel(parseInt(e.target.dataset.ch));
+                });
+            });
+            updateSelButtons();
+        }
+
+        function setupFaderDrag(knobEl, channelIndex) {
+            let isDragging = false;
+            let startY = 0;
+            let startValue = 0;
+            const container = knobEl.parentElement;
+
+            const onStart = (e) => {
+                isDragging = true;
+                startY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
+                startValue = faderValues[channelIndex];
+                
+                if(channelIndex !== 8) { // If not main fader
+                    setActiveChannel(channelIndex);
+                }
+                e.preventDefault(); // Prevent scrolling on touch
+            };
+
+            const onMove = (e) => {
+                if (!isDragging) return;
+                const clientY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
+                const deltaY = startY - clientY; // Up is positive
+                const containerHeight = container.clientHeight - knobEl.clientHeight; 
+                
+                let deltaValue = deltaY / containerHeight;
+                let newValue = startValue + deltaValue;
+                
+                newValue = Math.max(0, Math.min(1, newValue)); // Clamp between 0 and 1
+                faderValues[channelIndex] = newValue;
+                knobEl.style.bottom = `${newValue * 100}%`;
+
+                if(channelIndex !== 8) {
+                    evaluateFaderPosition(channelIndex, newValue);
+                } else {
+                    // Main fader acts as overall brightness for aesthetic
+                    viewerImg.style.filter = `brightness(${0.2 + newValue * 1.5})`;
+                }
+            };
+
+            const onEnd = () => { isDragging = false; };
+
+            knobEl.addEventListener('mousedown', onStart);
+            knobEl.addEventListener('touchstart', onStart, {passive: false});
+            window.addEventListener('mousemove', onMove);
+            window.addEventListener('touchmove', onMove, {passive: false});
+            window.addEventListener('mouseup', onEnd);
+            window.addEventListener('touchend', onEnd);
+        }
+
+        // Logic to switch image based on fader notch
+        function evaluateFaderPosition(chIndex, value) {
+            const items = portfolioData[currentBankIndex].channels[chIndex].items;
+            const numItems = items.length;
+            if(numItems === 0) return;
+
+            // Divide the 0-1 range into chunks
+            let itemIndex = Math.floor(value * numItems);
+            if (itemIndex >= numItems) itemIndex = numItems - 1; // Cap at max index
+
+            updateScreenImage(chIndex, itemIndex);
+            updateNotchIndicators(numItems, itemIndex);
+        }
+
+        function setActiveChannel(chIndex) {
+            activeChannelIndex = chIndex;
+            updateSelButtons();
+            
+            const currentCatName = portfolioData[currentBankIndex].channels[chIndex].name;
+            screenActiveCat.textContent = `SEL: ${currentCatName}`;
+            
+            // Re-evaluate image based on current fader position
+            evaluateFaderPosition(chIndex, faderValues[chIndex]);
+            
+            // Refresh metadata if overlay is open
+            if(activeMetadata) {
+                showMetadata(activeMetadata);
+            }
+        }
+
+        function updateSelButtons() {
+            document.querySelectorAll('.sel-btn').forEach(btn => {
+                if(parseInt(btn.dataset.ch) === activeChannelIndex) {
+                    btn.classList.add('active-green');
+                } else {
+                    btn.classList.remove('active-green');
+                }
             });
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const grid = document.getElementById('gallery-grid');
-            
-            mesProjets.forEach((projet, index) => {
-                const num = (index + 1).toString().padStart(2, '0');
-                
-                // Explication de la magie du survol (pour les petits curieux) :
-                // 1. 🖼️ L'image de base : Elle est coupée en carré et toute grise.
-                // 2. ⚡ L'étiquette rapide : Elle s'allume tout de suite quand tu la touches avec la souris !
-                // 3. 🚀 L'image magique géante : Elle attend un peu (600ms), puis elle grandit. Si tu enlèves ta souris, pouf, elle part super vite en 150ms pour ne pas gêner !
-                
-                const cardHTML = `
-                    <div class="relative aspect-square bg-gray-900 border border-gray-800 group cursor-crosshair">
-                        
-                        <!-- 🖼️ 1. Ton image normale (Coupée en carré, centrée, Grise) -->
-                        <img src="${projet.image}" 
-                             alt="${projet.titre}" 
-                             class="absolute inset-0 w-full h-full object-cover grayscale transition-all duration-300 group-hover:grayscale-0 z-0">
-                        
-                        <!-- ⚡ 2. L'étiquette rapide (Apparaît DIRECTEMENT quand tu passes la souris) -->
-                        <div class="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col justify-end p-4 border-[3px] border-transparent group-hover:border-console-green z-10 pointer-events-none">
-                            <div class="font-mono text-xs text-console-green mb-1">> SÉQUENCE SÉLECTIONNÉE</div>
-                            <h4 class="font-mono text-lg text-white mb-2 uppercase truncate" title="${projet.titre}">${projet.titre}</h4>
-                            <div class="flex flex-col gap-1 font-mono text-[10px] text-gray-400 border-t border-gray-700 pt-2">
-                                <span>LIEU : ${projet.lieu}</span>
-                                <span>DATE : ${projet.date}</span>
-                                <span class="text-console-cyan">STATUT : ${projet.statut}</span>
-                            </div>
-                        </div>
+        let currentDisplayedImageObj = null;
 
-                        <!-- 🚀 3. L'image géante (Prend son temps pour apparaître, part très vite !) -->
-                        <!-- Le secret : 'delay-0 duration-150' quand elle s'en va, et 'group-hover:delay-[600ms] group-hover:duration-500' quand elle apparaît ! -->
-                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full opacity-0 z-0 pointer-events-none transition-all duration-150 delay-0 group-hover:duration-500 group-hover:delay-[600ms] group-hover:opacity-100 group-hover:z-50 group-hover:w-[120%] group-hover:h-[120%] sm:group-hover:w-[150%] sm:group-hover:h-[150%]">
-                            
-                            <!-- L'image dans son vrai format -->
-                            <img src="${projet.image}" alt="${projet.titre}" class="w-full h-full object-contain drop-shadow-2xl bg-console-bg p-2 border border-gray-700">
-                            
-                            <!-- Panneau d'informations collé sur la grande image -->
-                            <div class="absolute bottom-2 left-2 right-2 bg-black/90 p-4 border-[3px] border-console-green flex flex-col justify-end">
-                                <div class="font-mono text-xs text-console-green mb-1">> SÉQUENCE SÉLECTIONNÉE</div>
-                                <h4 class="font-mono text-lg text-white mb-2 uppercase truncate" title="${projet.titre}">${projet.titre}</h4>
-                                <div class="flex flex-col gap-1 font-mono text-[10px] text-gray-400 border-t border-gray-700 pt-2">
-                                    <span>LIEU : ${projet.lieu}</span>
-                                    <span>DATE : ${projet.date}</span>
-                                    <span class="text-console-cyan">STATUT : ${projet.statut}</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- 🏷️ 4. Petit numéro secret (Toujours visible en haut à gauche) -->
-                        <div class="absolute top-2 left-2 font-mono text-[10px] text-gray-500 bg-black/80 px-1 z-20 pointer-events-none">
-                            IMG_${num}
-                        </div>
-                    </div>
-                `;
+        function updateScreenImage(chIndex, itemIndex) {
+            const item = portfolioData[currentBankIndex].channels[chIndex].items[itemIndex];
+            if(item && (!currentDisplayedImageObj || currentDisplayedImageObj.img !== item.img)) {
+                currentDisplayedImageObj = item;
+                // Fade effect
+                viewerImg.style.opacity = 0;
+                setTimeout(() => {
+                    viewerImg.src = item.img;
+                    viewerImg.style.opacity = 0.8; // Base opacity
+                }, 150);
                 
-                grid.insertAdjacentHTML('beforeend', cardHTML);
+                // Update HUD if visible
+                if(activeMetadata) showMetadata(activeMetadata);
+            }
+        }
+
+        function updateNotchIndicators(total, activeIndex) {
+            notchIndicator.innerHTML = '';
+            for(let i=total-1; i>=0; i--) { // Reverse so top is highest index
+                const dot = document.createElement('div');
+                dot.className = `w-2 h-2 rounded-full border border-gray-500 ${i === activeIndex ? 'bg-green-400 shadow-[0_0_5px_#0f0]' : 'bg-gray-800'}`;
+                notchIndicator.appendChild(dot);
+            }
+        }
+
+        function updateScreen() {
+            screenBankName.textContent = portfolioData[currentBankIndex].name;
+        }
+
+        function setupButtons() {
+            // Home / Menu
+            document.getElementById('btn-home').addEventListener('click', (e) => {
+                isMenuOpen = !isMenuOpen;
+                e.currentTarget.classList.toggle('active-blue', isMenuOpen);
+                menuOverlay.classList.toggle('active', isMenuOpen);
+                
+                // Hide HUD when menu opens
+                if(isMenuOpen) {
+                    metadataHud.classList.add('hidden');
+                    clearUDKs();
+                    activeMetadata = null;
+                }
             });
-        });
+
+            // Fader Banks
+            document.querySelectorAll('.bank-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    // Update Active Button Visuals
+                    document.querySelectorAll('.bank-btn').forEach(b => b.classList.remove('active-green'));
+                    e.target.classList.add('active-green');
+                    
+                    // Switch Bank
+                    currentBankIndex = parseInt(e.target.dataset.bank);
+                    
+                    // Reset faders physically and logically
+                    faderValues = Array(9).fill(0);
+                    renderFaders();
+                    updateScreen();
+                    setActiveChannel(0);
+                });
+            });
+
+            // User Defined Keys (Metadata Overlay)
+            document.querySelectorAll('.udk-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    if(isMenuOpen) return; // Don't show info if menu is open
+                    
+                    const infoType = e.currentTarget.dataset.info;
+                    
+                    clearUDKs();
+                    
+                    if(infoType === 'none') {
+                        activeMetadata = null;
+                        metadataHud.classList.add('hidden');
+                        e.currentTarget.classList.add('active-orange');
+                        setTimeout(() => e.currentTarget.classList.remove('active-orange'), 300);
+                        return;
+                    }
+
+                    e.currentTarget.classList.add('active-orange');
+                    activeMetadata = infoType;
+                    showMetadata(infoType);
+                });
+            });
+        }
+
+        function clearUDKs() {
+            document.querySelectorAll('.udk-btn').forEach(b => b.classList.remove('active-orange'));
+        }
+
+        function showMetadata(type) {
+            if(!currentDisplayedImageObj) return;
+            
+            const labels = {
+                'date': 'DATE DE RÉALISATION',
+                'location': 'LIEU',
+                'role': 'MON RÔLE',
+                'equipment': 'MATÉRIEL UTILISÉ',
+                'client': 'CLIENT / PROJET'
+            };
+
+            hudLabel.textContent = labels[type];
+            hudValue.textContent = currentDisplayedImageObj[type] || 'Non renseigné';
+            
+            metadataHud.classList.remove('hidden');
+        }
+
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('clock').textContent = now.toLocaleTimeString('fr-FR');
+        }
+
+        // Start App
+        window.addEventListener('DOMContentLoaded', init);
+
     </script>
 </body>
 </html>
