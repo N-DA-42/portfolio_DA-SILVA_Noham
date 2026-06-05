@@ -310,36 +310,44 @@
                     <img id="viewer-img" src="https://placehold.co/800x450/1a1a24/00ccff?text=Bougez+un+fader+pour+commencer" class="w-full h-full object-cover opacity-80 transition-opacity duration-300" alt="Portfolio Image">
                     
                     <!-- Metadata HUD (Always visible subtly, or pops when UDK pressed) -->
-                    <div id="metadata-hud" class="absolute bottom-4 left-4 bg-black/60 text-white p-3 rounded border border-gray-600 text-sm hidden">
-                        <p class="text-xs text-gray-400 mb-1" id="hud-label">INFO</p>
-                        <p class="font-bold text-lg text-blue-300" id="hud-value">---</p>
-                    </div>
-
-                    <!-- Fader Notch Indicator -->
-                    <div class="absolute right-4 top-1/2 transform -translate-y-1/2 flex flex-col gap-1" id="notch-indicator">
-                        <!-- Dots populated by JS -->
-                    </div>
+                <div id="metadata-hud" class="absolute bottom-4 left-4 bg-black/60 text-white p-3 rounded border border-gray-600 text-sm hidden">
+                    <p class="text-xs text-gray-400 mb-1" id="hud-label">INFO</p>
+                    <p class="font-bold text-lg text-blue-300" id="hud-value">---</p>
                 </div>
 
-                <!-- Menu Overlay (About Me) -->
-                <div id="menu-overlay" class="screen-overlay">
-                    <h2 class="text-3xl font-bold text-white mb-2 tracking-widest">ABOUT ME</h2>
-                    <div class="w-16 h-1 bg-blue-500 mb-4"></div>
-                    <p class="text-gray-300 mb-4 max-w-md">
-                        Bonjour, je suis technicien audiovisuel polyvalent. 
-                        Passionné par l'image et le son, j'interviens sur la lumière, la réalisation, le son et le montage. 
-                        Ce portfolio (inspiré de la DM3) reflète mon approche technique et créative.
-                    </p>
-                    <div class="bg-gray-800 p-4 rounded border border-gray-600 w-full max-w-md text-left">
-                        <p class="text-green-400 text-sm mb-1">> CONTACT</p>
-                        <p>Email: contact@mon-portfolio.fr</p>
-                        <p>Tel: +33 6 12 34 56 78</p>
-                        <p>Web: www.mon-portfolio.fr</p>
-                    </div>
+                <!-- Fader Notch Indicator -->
+                <div class="absolute right-4 top-1/2 transform -translate-y-1/2 flex flex-col gap-1" id="notch-indicator">
+                    <!-- Dots populated by JS -->
                 </div>
             </div>
 
-            <div class="fader-section flex flex-col items-center justify-between">
+            <!-- 
+            =========================================================
+            📝 ZONE DE TEXTE : MENU / PRÉSENTATION ("ABOUT ME") 📝
+            =========================================================
+            Modifiez les textes ci-dessous pour votre présentation 
+            et vos coordonnées de contact.
+            ========================================================= 
+            -->
+            <!-- Menu Overlay (About Me) -->
+            <div id="menu-overlay" class="screen-overlay">
+                <h2 class="text-3xl font-bold text-white mb-2 tracking-widest">ABOUT ME</h2>
+                <div class="w-16 h-1 bg-blue-500 mb-4"></div>
+                <p class="text-gray-300 mb-4 max-w-md">
+                    Bonjour, je suis technicien audiovisuel polyvalent. 
+                    Passionné par l'image et le son, j'interviens sur la lumière, la réalisation, le son et le montage. 
+                    Ce portfolio (inspiré de la DM3) reflète mon approche technique et créative.
+                </p>
+                <div class="bg-gray-800 p-4 rounded border border-gray-600 w-full max-w-md text-left">
+                    <p class="text-green-400 text-sm mb-1">> CONTACT</p>
+                    <p>Email: contact@mon-portfolio.fr</p>
+                    <p>Tel: +33 6 12 34 56 78</p>
+                    <p>Web: www.mon-portfolio.fr</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="fader-section flex flex-col items-center justify-between">
                 
                 <!-- USB & Phones -->
                 <div class="w-full flex justify-between px-4">
@@ -446,44 +454,119 @@
         // Helper to generate mock images
         function genImg(text, bg, color) { return `https://placehold.co/800x450/${bg}/${color}?text=${encodeURIComponent(text)}`; }
 
+        // =========================================================================
+        // 📸 ZONE DE CONFIGURATION : VOS PHOTOS ET MÉTADONNÉES SONT ICI 📸
+        // =========================================================================
+        //
+        // INSTRUCTIONS POUR MODIFIER :
+        // 1. img: Remplacez le genImg(...) par le lien de votre image entre guillemets.
+        //    Exemple -> img: "dossier-images/mon-concert.jpg",
+        // 2. date, location, role... : Changez le texte entre les guillemets "".
+        // ⚠️ ATTENTION : Ne supprimez pas les virgules à la fin des lignes !
+        // =========================================================================
+
         const portfolioData = [
-            { // BANK 0: PRO
+            { 
+                // 🎛️ PAGE 1 (Bouton "PRO")
                 name: "PROJETS PRO",
                 channels: [
-                    { name: "LUMIÈRE", color: "text-blue-400", items: [
-                        { img: genImg("Concert Rock Zénith", "1a1a24", "00ccff"), date: "15 Mai 2025", location: "Zénith Paris", role: "Pupitreur Light", equipment: "GrandMA3", client: "Live Nation" },
-                        { img: genImg("Festival Electro", "2a1a24", "ff00cc"), date: "10 Juil 2025", location: "Lyon", role: "Light Designer", equipment: "Avolites Arena", client: "ElectroFest" },
-                        { img: genImg("Théâtre Classique", "1a2a1a", "00ffcc"), date: "02 Fev 2024", location: "Opéra", role: "Régisseur Lumière", equipment: "ETC Gio", client: "Troupe Molière" }
-                    ]},
-                    { name: "RÉAL", color: "text-red-400", items: [
-                        { img: genImg("Captation Live", "241a1a", "ff6600"), date: "22 Nov 2024", location: "Bercy", role: "Réalisateur", equipment: "Panasonic AW-UE150", client: "TV Broadcast" },
-                        { img: genImg("Clip Vidéo", "24241a", "ffff00"), date: "05 Mars 2025", location: "Studio 4", role: "Assistant Réal", equipment: "Blackmagic URSA", client: "Label Music" }
-                    ]},
-                    { name: "SON", color: "text-green-400", items: [
-                        { img: genImg("Mixage Façade", "1a2424", "00ffaa"), date: "18 Aout 2025", location: "Stade de France", role: "Ingénieur Son (FOH)", equipment: "Yamaha Rivage", client: "Mega Tour" },
-                        { img: genImg("Prise de Son Tournage", "241a24", "cc00ff"), date: "12 Avril 2024", location: "Paris", role: "Perchman", equipment: "Sound Devices", client: "Film Prod" },
-                        { img: genImg("Design Sonore", "111", "fff"), date: "01 Sept 2025", location: "Studio", role: "Sound Designer", equipment: "ProTools", client: "Jeu Vidéo X" },
-                        { img: genImg("Enregistrement Studio", "222", "ddd"), date: "10 Oct 2024", location: "Studio A", role: "Opérateur", equipment: "SSL Duality", client: "Groupe Y" }
-                    ]},
-                    { name: "CADRAGE", color: "text-yellow-400", items: [
-                        { img: genImg("Caméra Épaule", "332", "ffa"), date: "14 Juin 2025", location: "Marseille", role: "Cadreur", equipment: "Sony FX9", client: "Docu TV" }
-                    ]},
-                    { name: "MONTAGE", color: "text-purple-400", items: [
-                        { img: genImg("Montage Docu", "213", "eaf"), date: "Janvier 2025", location: "Télétravail", role: "Monteur", equipment: "Premiere Pro", client: "Arte" },
-                        { img: genImg("Étalonnage", "312", "fea"), date: "Fevrier 2025", location: "Post-Prod Studio", role: "Étalonneur", equipment: "DaVinci Resolve", client: "Indé Prod" }
-                    ]},
-                    { name: "RÉGIE", color: "text-orange-400", items: [
-                        { img: genImg("Régie Vidéo Corporate", "421", "ffe"), date: "08 Dec 2025", location: "La Défense", role: "Régisseur Vidéo", equipment: "Roland V-160HD", client: "Corp Inc" }
-                    ]},
-                    { name: "SCÉNO", color: "text-pink-400", items: [
-                        { img: genImg("Mapping Vidéo", "113", "fdf"), date: "31 Oct 2025", location: "Château X", role: "Technicien Vidéo", equipment: "Resolume", client: "Mairie" }
-                    ]},
-                    { name: "DIVERS", color: "text-gray-400", items: [
-                        { img: genImg("Installation Fixe", "222", "aaa"), date: "En cours", location: "Club Z", role: "Intégrateur", equipment: "Dante / Art-Net", client: "Club Z" }
-                    ]}
+                    {
+                        // === FADER 1 : LUMIÈRE ===
+                        name: "LUMIÈRE", color: "text-blue-400", items: [
+                            { 
+                                // ---> Image 1 (Cran 1 du fader)
+                                img: genImg("Concert Rock Zénith", "1a1a24", "00ccff"), 
+                                date: "15 Mai 2025", 
+                                location: "Zénith Paris", 
+                                role: "Pupitreur Light", 
+                                equipment: "GrandMA3", 
+                                client: "Live Nation" 
+                            },
+                            { 
+                                // ---> Image 2 (Cran 2 du fader)
+                                img: genImg("Festival Electro", "2a1a24", "ff00cc"), 
+                                date: "10 Juil 2025", 
+                                location: "Lyon", 
+                                role: "Light Designer", 
+                                equipment: "Avolites Arena", 
+                                client: "ElectroFest" 
+                            },
+                            { 
+                                // ---> Image 3 (Cran 3 du fader)
+                                img: genImg("Théâtre Classique", "1a2a1a", "00ffcc"), 
+                                date: "02 Fev 2024", 
+                                location: "Opéra", 
+                                role: "Régisseur Lumière", 
+                                equipment: "ETC Gio", 
+                                client: "Troupe Molière" 
+                            }
+                        ]
+                    },
+                    {
+                        // === FADER 2 : RÉALISATION ===
+                        name: "RÉAL", color: "text-red-400", items: [
+                            { 
+                                img: genImg("Captation Live", "241a1a", "ff6600"), 
+                                date: "22 Nov 2024", 
+                                location: "Bercy", 
+                                role: "Réalisateur", 
+                                equipment: "Panasonic AW-UE150", 
+                                client: "TV Broadcast" 
+                            },
+                            { 
+                                img: genImg("Clip Vidéo", "24241a", "ffff00"), 
+                                date: "05 Mars 2025", 
+                                location: "Studio 4", 
+                                role: "Assistant Réal", 
+                                equipment: "Blackmagic URSA", 
+                                client: "Label Music" 
+                            }
+                        ]
+                    },
+                    {
+                        // === FADER 3 : SON ===
+                        name: "SON", color: "text-green-400", items: [
+                            { img: genImg("Mixage Façade", "1a2424", "00ffaa"), date: "18 Aout 2025", location: "Stade de France", role: "Ingénieur Son (FOH)", equipment: "Yamaha Rivage", client: "Mega Tour" },
+                            { img: genImg("Prise de Son Tournage", "241a24", "cc00ff"), date: "12 Avril 2024", location: "Paris", role: "Perchman", equipment: "Sound Devices", client: "Film Prod" },
+                            { img: genImg("Design Sonore", "111", "fff"), date: "01 Sept 2025", location: "Studio", role: "Sound Designer", equipment: "ProTools", client: "Jeu Vidéo X" },
+                            { img: genImg("Enregistrement Studio", "222", "ddd"), date: "10 Oct 2024", location: "Studio A", role: "Opérateur", equipment: "SSL Duality", client: "Groupe Y" }
+                        ]
+                    },
+                    {
+                        // === FADER 4 : CADRAGE ===
+                        name: "CADRAGE", color: "text-yellow-400", items: [
+                            { img: genImg("Caméra Épaule", "332", "ffa"), date: "14 Juin 2025", location: "Marseille", role: "Cadreur", equipment: "Sony FX9", client: "Docu TV" }
+                        ]
+                    },
+                    {
+                        // === FADER 5 : MONTAGE ===
+                        name: "MONTAGE", color: "text-purple-400", items: [
+                            { img: genImg("Montage Docu", "213", "eaf"), date: "Janvier 2025", location: "Télétravail", role: "Monteur", equipment: "Premiere Pro", client: "Arte" },
+                            { img: genImg("Étalonnage", "312", "fea"), date: "Fevrier 2025", location: "Post-Prod Studio", role: "Étalonneur", equipment: "DaVinci Resolve", client: "Indé Prod" }
+                        ]
+                    },
+                    {
+                        // === FADER 6 : RÉGIE ===
+                        name: "RÉGIE", color: "text-orange-400", items: [
+                            { img: genImg("Régie Vidéo Corporate", "421", "ffe"), date: "08 Dec 2025", location: "La Défense", role: "Régisseur Vidéo", equipment: "Roland V-160HD", client: "Corp Inc" }
+                        ]
+                    },
+                    {
+                        // === FADER 7 : SCÉNOGRAPHIE ===
+                        name: "SCÉNO", color: "text-pink-400", items: [
+                            { img: genImg("Mapping Vidéo", "113", "fdf"), date: "31 Oct 2025", location: "Château X", role: "Technicien Vidéo", equipment: "Resolume", client: "Mairie" }
+                        ]
+                    },
+                    {
+                        // === FADER 8 : DIVERS ===
+                        name: "DIVERS", color: "text-gray-400", items: [
+                            { img: genImg("Installation Fixe", "222", "aaa"), date: "En cours", location: "Club Z", role: "Intégrateur", equipment: "Dante / Art-Net", client: "Club Z" }
+                        ]
+                    }
                 ]
             },
-            { // BANK 1: PERSO (Mock data)
+            { 
+                // 🎛️ PAGE 2 (Bouton "PERSO")
                 name: "PROJETS PERSO",
                 channels: Array(8).fill(null).map((_, i) => ({
                     name: `PERSO ${i+1}`, color: "text-white", items: [
@@ -492,7 +575,7 @@
                     ]
                 }))
             },
-            // Banks 2 & 3 filled similarly for the sake of completion to prevent errors
+            // 🎛️ PAGES 3 ET 4 (Boutons "EVENT" et "ARCHIVE")
             { name: "EVENT", channels: Array(8).fill(null).map((_, i) => ({ name: `EVT ${i+1}`, color: "text-white", items: [{ img: genImg(`Event ${i+1}`, "131", "dfd"), date: "-", location: "-", role: "-", equipment: "-", client: "-" }] })) },
             { name: "ARCHIVE", channels: Array(8).fill(null).map((_, i) => ({ name: `ARC ${i+1}`, color: "text-white", items: [{ img: genImg(`Archive ${i+1}`, "311", "fdd"), date: "-", location: "-", role: "-", equipment: "-", client: "-" }] })) }
         ];
